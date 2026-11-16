@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { API } from "../api";
 
 export default function Usuarios({ navegar }) {
   const [cont, setCont] = useState(0);
@@ -13,20 +14,20 @@ export default function Usuarios({ navegar }) {
     setCont(cont + 1);
   };
 
-  useEffect(() => {
-    document.title = `Contador: ${cont}`;
-    buscarUsuarios();
-  }, [cont]);
-
   const buscarUsuarios = async () => {
     try {
-      const resultado = await fetch("http://localhost:3000/usuarios");
+      const resultado = await fetch(`${API}/usuarios`);
       const data = await resultado.json();
       setUsuarios(Array.isArray(data) ? data : []);
     } catch (erro) {
       console.error("Erro ao buscar usuários:", erro);
     }
   };
+
+  useEffect(() => {
+    document.title = `Contador: ${cont}`;
+    buscarUsuarios();
+  }, [cont]);
 
   const editar = (usuario) => {
     setModal(true);
@@ -37,7 +38,7 @@ export default function Usuarios({ navegar }) {
   };
 
   const confirmarEdicao = async () => {
-    const resultado = await fetch(`http://localhost:3000/usuarios/${id}`, {
+    const resultado = await fetch(`${API}/usuarios/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, nome, senha })
@@ -51,7 +52,7 @@ export default function Usuarios({ navegar }) {
     if (!window.confirm(`Deseja excluir o usuário ${usuario.nome || usuario.email}?`)) {
       return;
     }
-    await fetch(`http://localhost:3000/usuarios/${usuario.id}`, {
+    await fetch(`${API}/usuarios/${usuario.id}`, {
       method: "DELETE"
     });
     buscarUsuarios();

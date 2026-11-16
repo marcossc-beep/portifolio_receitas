@@ -1,4 +1,4 @@
-﻿export default function BoasVindas({ navegar }) {
+export default function BoasVindas({ navegar }) {
   return (
     <main className="tela-boas-vindas">
       <div className="topo-boas-vindas">

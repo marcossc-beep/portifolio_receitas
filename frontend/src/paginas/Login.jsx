@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+import { useState } from "react";
+import { API } from "../api";
 
 export default function Login({ navegar, onLoginSucesso }) {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ export default function Login({ navegar, onLoginSucesso }) {
 
     setCarregando(true);
     try {
-      const resultado = await fetch("http://localhost:3000/login", {
+      const resultado = await fetch(`${API}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha })
@@ -29,7 +30,7 @@ export default function Login({ navegar, onLoginSucesso }) {
         setErro(data.error || "E-mail ou senha inválidos.");
       } else {
         if (onLoginSucesso) {
-          onLoginSucesso(data.usuario || { nome: email.split("@")[0], email });
+          onLoginSucesso(data.usuario);
         } else {
           navegar("home");
         }

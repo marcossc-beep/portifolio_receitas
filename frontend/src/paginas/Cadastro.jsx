@@ -1,4 +1,5 @@
-﻿import { useState } from "react";
+import { useState } from "react";
+import { API } from "../api";
 
 export default function Cadastro({ navegar }) {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ export default function Cadastro({ navegar }) {
 
     setCarregando(true);
     try {
-      const resultado = await fetch("http://localhost:3000/usuarios", {
+      const resultado = await fetch(`${API}/usuarios`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, senha, nome })

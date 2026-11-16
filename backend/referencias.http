@@ -1,0 +1,121 @@
+@api = http://localhost:3000
+
+### ---------- LOGIN ----------
+
+### Login certo
+POST {{api}}/login
+Content-Type: application/json
+
+{
+    "email": "alena@email.com",
+    "senha": "123456"
+}
+
+### Login errado (401)
+POST {{api}}/login
+Content-Type: application/json
+
+{
+    "email": "alena@email.com",
+    "senha": "errada"
+}
+
+### ---------- USUÁRIOS ----------
+
+GET {{api}}/usuarios
+
+###
+POST {{api}}/usuarios
+Content-Type: application/json
+
+{
+    "nome": "Kauane",
+    "email": "kauane@email.com",
+    "senha": "123456"
+}
+
+###
+PUT {{api}}/usuarios/3
+Content-Type: application/json
+
+{
+    "nome": "Marina Costa Souza",
+    "email": "marina@email.com",
+    "senha": "123456"
+}
+
+###
+DELETE {{api}}/usuarios/4
+
+### ---------- RECEITAS ----------
+
+### Todas
+GET {{api}}/receitas
+
+### Busca por nome ou ingrediente
+GET {{api}}/receitas?busca=abacate
+
+### Por categoria
+GET {{api}}/receitas?categoria=Café da manhã
+
+### Cadastrar (ingredientes e modo de preparo: um por linha, \n no JSON)
+POST {{api}}/receitas
+Content-Type: application/json
+
+{
+    "nome": "Vitamina de banana",
+    "descricao": "Vitamina rápida para o café da manhã.",
+    "categoria": "Café da manhã",
+    "ingredientes": "Banana\nLeite\nAveia",
+    "instrucoes": "Bata tudo no liquidificador.\nSirva gelado.",
+    "tempo_preparo_minutos": 5,
+    "calorias": 220,
+    "imagem": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=600&q=80",
+    "usuario_id": 1
+}
+
+###
+DELETE {{api}}/receitas/9
+
+### ---------- FAVORITOS ----------
+
+GET {{api}}/favoritos/1
+
+###
+POST {{api}}/favoritos
+Content-Type: application/json
+
+{
+    "usuario_id": 1,
+    "receita_id": 2
+}
+
+###
+DELETE {{api}}/favoritos/1/2
+
+### ---------- LISTA DE COMPRAS ----------
+
+GET {{api}}/compras/1
+
+###
+POST {{api}}/compras
+Content-Type: application/json
+
+{
+    "usuario_id": 1,
+    "nome": "Abacate"
+}
+
+###
+PUT {{api}}/compras/1
+Content-Type: application/json
+
+{
+    "quantidade": 5
+}
+
+###
+DELETE {{api}}/compras/1
+
+###
+DELETE {{api}}/compras/usuario/1
